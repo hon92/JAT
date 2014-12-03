@@ -5,10 +5,13 @@
  */
 package ejb;
 
+import javax.ejb.Local;
+
 /**
  *
  * @author Honza
  */
+@Local
 public interface SimpleTransactionLocal
 {
 
