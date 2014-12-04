@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import tables.Employe;
 import tables.User;
 
@@ -19,6 +20,7 @@ import tables.User;
  * @author Honza
  */
 @ManagedBean
+@SessionScoped
 public class EmployeManagedBean
 {
 
@@ -123,10 +125,20 @@ public class EmployeManagedBean
         if (u != null)
         {
             editedUser = u;
-            return "customerEdit";
+            return "customerEdit?faces-redirect=true";
         }
         return "";
 
+    }
+
+    public String save()
+    {
+        if (editedUser != null)
+        {
+            ul.update(editedUser);
+            return "customers?faces-redirect=true";
+        }
+        return "";
     }
 
 }

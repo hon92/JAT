@@ -15,8 +15,8 @@
                 <td><h:outputLabel value="Email"/></td><td><h:inputText value="#{employeManagedBean.editedUser.email}"/></td><tr/>
                 <td><h:outputLabel value="Password"/></td><td><h:inputText value="#{employeManagedBean.editedUser.passWord}"/></td><tr/>
 
-                <td><h:commandButton value="Save"/></td>
-                <td><h:commandButton value="Storno" /></td>
+                <td><h:commandButton value="Save" action="#{employeManagedBean.save()}"/></td>
+                <td><h:commandButton value="Storno" action="customers?faces-redirect=true"/></td>
             </table>
         </h:form>
 
