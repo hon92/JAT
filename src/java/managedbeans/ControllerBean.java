@@ -35,6 +35,8 @@ public class ControllerBean implements Serializable
     private String login;
     private String passWord;
     private boolean isAdmin;
+    private Employe loggedEmploye;
+    private User loggedUser;
 
     public ControllerBean()
     {
@@ -61,6 +63,7 @@ public class ControllerBean implements Serializable
             if (e != null)
             {
                 isLogged = true;
+                loggedEmploye = e;
                 return "main.xhtml?faces-redirect=true";
             }
 
@@ -71,9 +74,15 @@ public class ControllerBean implements Serializable
             if (u != null)
             {
                 isLogged = true;
+                u = loggedUser;
                 return "main.xhtml?faces-redirect=true";
             }
         }
+
+        loggedEmploye = null;
+        loggedUser = null;
+        isAdmin = false;
+        isLogged = false;
         return "index.xhtml?faces-redirect=true";
     }
 
@@ -111,6 +120,46 @@ public class ControllerBean implements Serializable
     public void setIsAdmin(boolean isAdmin)
     {
         this.isAdmin = isAdmin;
+    }
+
+    public EmployeLocal getEl()
+    {
+        return el;
+    }
+
+    public void setEl(EmployeLocal el)
+    {
+        this.el = el;
+    }
+
+    public UserLocal getUl()
+    {
+        return ul;
+    }
+
+    public void setUl(UserLocal ul)
+    {
+        this.ul = ul;
+    }
+
+    public Employe getLoggedEmploye()
+    {
+        return loggedEmploye;
+    }
+
+    public void setLoggedEmploye(Employe loggedEmploye)
+    {
+        this.loggedEmploye = loggedEmploye;
+    }
+
+    public User getLoggedUser()
+    {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(User loggedUser)
+    {
+        this.loggedUser = loggedUser;
     }
 
 }

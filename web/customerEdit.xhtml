@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/templates/contentTemplate.xhtml">
+
+    <ui:define name="content">
+
+        <h:form>
+            <table>
+                <td><h:outputLabel value="Name"/></td><td><h:inputText value="#{employeManagedBean.editedUser.name}"/></td><tr/>
+                <td><h:outputLabel value="Lastname"/></td><td><h:inputText value="#{employeManagedBean.editedUser.lastName}"/></td><tr/>
+                <td><h:outputLabel value="Email"/></td><td><h:inputText value="#{employeManagedBean.editedUser.email}"/></td><tr/>
+                <td><h:outputLabel value="Password"/></td><td><h:inputText value="#{employeManagedBean.editedUser.passWord}"/></td><tr/>
+
+                <td><h:commandButton value="Save"/></td>
+                <td><h:commandButton value="Storno" /></td>
+            </table>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

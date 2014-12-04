@@ -24,31 +24,32 @@ public class UserMapper implements UserLocal
     @Override
     public void insert(User u)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.persist(u);
     }
 
     @Override
     public void update(User u)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.merge(u);
+        em.flush();
     }
 
     @Override
     public User findById(long id)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (User) em.find(User.class, id);
     }
 
     @Override
     public List<User> selectAll()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
     @Override
     public void delete(User u)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.remove(u);
     }
 
     @Override

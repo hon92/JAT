@@ -24,7 +24,7 @@ public class EmployeMapper implements EmployeLocal
     @Override
     public void insert(Employe emp)
     {
-        throw new UnsupportedOperationException();
+        em.persist(emp);
     }
 
     @Override
@@ -50,24 +50,25 @@ public class EmployeMapper implements EmployeLocal
     @Override
     public void update(Employe emp)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.merge(emp);
+        em.flush();
     }
 
     @Override
-    public Employe findById(long emp)
+    public Employe findById(long id)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (Employe) em.find(Employe.class, id);
     }
 
     @Override
     public List<Employe> selectAll()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.createQuery("SELECT e FROM Employe e", Employe.class).getResultList();
     }
 
     @Override
     public void delete(Employe emp)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.remove(emp);
     }
 }

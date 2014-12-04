@@ -23,31 +23,32 @@ public class AccountMapper implements AccountLocal
     @Override
     public void insert(Account acc)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.persist(acc);
     }
 
     @Override
     public void update(Account acc)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.merge(acc);
+        em.flush();
     }
 
     @Override
     public void delete(Account acc)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.remove(acc);
     }
 
     @Override
     public Account findById(long id)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (Account) em.find(Account.class, id);
     }
 
     @Override
     public List<Account> selectAll()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.createQuery("SELECT a FROM Account a", Account.class).getResultList();
     }
 
 }
