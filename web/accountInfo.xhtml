@@ -1,34 +1,32 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <ui:composition template="/templates/contentTemplate.xhtml">
-            <ui:define name="content">
-                <h:form>
-                    <h:outputLabel value="Change active layout"/>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/templates/contentTemplate.xhtml">
 
-                    <h:selectOneMenu value="#{userManagedBean.activeAccount}">
-                        <f:selectItems value="#{userManagedBean.accounts}" var="acc" itemLabel="#{acc.accountNumber}"/>
-                        <f:converter converterId="accountConverter"/>
-                    </h:selectOneMenu>
-                    <h:commandButton value="Change account"/>
-                </h:form>
+    <ui:define name="content">
+        <h:form>
+            <h:outputLabel value="Change active layout"/>
+
+            <h:selectOneMenu value="#{userManagedBean.activeAccount}">
+                <f:selectItems value="#{userManagedBean.accounts}" var="acc" itemLabel="#{acc.accountNumber}"/>
+                <f:converter converterId="accountConverter"/>
+            </h:selectOneMenu>
+            <h:commandButton value="Change account"/>
+        </h:form>
+        <br/>
+        <h:panelGroup id="accInfoGroup">
+
+            <h:outputLabel value="Active account: #{userManagedBean.activeAccount.accountNumber}"/><br/>
+            <h:outputLabel value="Money on account: #{userManagedBean.activeAccount.actualBalance}"/><br/>
+            <h:outputLabel value="Day limit: #{userManagedBean.activeAccount.dayLimit}"/><br/>
+
+        </h:panelGroup>
 
 
-                <h:outputLabel value="Active account:"/>
-                <h:outputLabel value="acc1"/>
-                <h:outputLabel value="info about active account"/>
-                <br/><br/>
+    </ui:define>
 
-
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+</ui:composition>
 

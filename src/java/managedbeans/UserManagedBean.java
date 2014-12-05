@@ -46,7 +46,14 @@ public class UserManagedBean
 
     public List<Account> getAccounts()
     {
-        return al.getAccountsFromUser(controllerBean.getLoggedUser().getId());
+        List<Account> acc = al.getAccountsFromUser(controllerBean.getLoggedUser().getId());
+
+        if (activeAccount == null && !acc.isEmpty())
+        {
+            activeAccount = acc.get(0);
+        }
+
+        return acc;
     }
 
     public void setAccounts(List<Account> accounts)
