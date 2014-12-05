@@ -121,4 +121,15 @@ public class Account implements Serializable
     {
         this.id = aId;
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj != null && obj instanceof Account)
+        {
+            return ((Account) obj).getId().equals(id);
+        }
+        return false;
+    }
+
 }

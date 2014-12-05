@@ -32,9 +32,7 @@ public class AccountConverter implements Converter
     {
         if (value != null)
         {
-            Account ac = accountMapper.findById(Long.parseLong(value));
-
-            return ac;
+            return accountMapper.findById(Long.parseLong(value));
         }
         return null;
     }
@@ -46,7 +44,7 @@ public class AccountConverter implements Converter
         {
             return ((Account) (value)).getId().toString();
         }
-        return "";
+        return null;
     }
 
     private AccountLocal lookupAccountMapperLocal()
