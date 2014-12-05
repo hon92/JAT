@@ -28,4 +28,6 @@ public interface UserLocal
     public void delete(User u);
 
     public User tryLogin(String name, String password);
+
+    public List<User> selectAllWithName(String search);
 }

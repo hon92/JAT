@@ -6,13 +6,13 @@
 package managedbeans;
 
 import ejb.EmployeLocal;
-import ejb.EmployeMapper;
 import ejb.UserLocal;
-import ejb.UserMapper;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import tables.Employe;
 import tables.User;
 
@@ -40,8 +40,7 @@ public class ControllerBean implements Serializable
 
     public ControllerBean()
     {
-        el = new EmployeMapper();
-        ul = new UserMapper();
+
     }
 
     public boolean isIsLogged()
@@ -74,16 +73,18 @@ public class ControllerBean implements Serializable
             if (u != null)
             {
                 isLogged = true;
-                u = loggedUser;
+                loggedUser = u;
                 return "main.xhtml?faces-redirect=true";
             }
         }
-
+        FacesContext fc = FacesContext.getCurrentInstance();
+        fc.addMessage(null, new FacesMessage("Wrong login or password"));
         loggedEmploye = null;
         loggedUser = null;
         isAdmin = false;
         isLogged = false;
-        return "index.xhtml?faces-redirect=true";
+        //return "index.xhtml?faces-redirect=true";
+        return "";
     }
 
     public String logout()
@@ -160,6 +161,18 @@ public class ControllerBean implements Serializable
     public void setLoggedUser(User loggedUser)
     {
         this.loggedUser = loggedUser;
+    }
+
+    public String getLoginName()
+    {
+        if (isAdmin)
+        {
+            return loggedEmploye.getName() + "(admin)";
+        }
+        else
+        {
+            return loggedUser.getName();
+        }
     }
 
 }

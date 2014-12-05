@@ -59,7 +59,7 @@ public class UserMapper implements UserLocal
 
         try
         {
-            TypedQuery<User> q = em.createNamedQuery("Employe.loginAndPassword", User.class);
+            TypedQuery<User> q = em.createNamedQuery("User.loginAndPassword", User.class);
             q.setParameter("login", name);
             q.setParameter("password", password);
             u = q.getSingleResult();
@@ -70,6 +70,15 @@ public class UserMapper implements UserLocal
         }
 
         return u;
+    }
+
+    @Override
+    public List<User> selectAllWithName(String search)
+    {
+        TypedQuery<User> list = em.createNamedQuery("User.getByName", User.class);
+        list.setParameter("regex", "%" + search);
+        return list.getResultList();
+
     }
 
 }

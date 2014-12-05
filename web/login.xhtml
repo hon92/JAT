@@ -1,24 +1,33 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="templates/defaultTemplate.xhtml">
 
-    <h:panelGroup>
-        <h2 align="center">Welcome in bank system</h2>
-        <h4 align="center">Please start with login</h4>
-        <h:form>
-            <table align="center">
-                <td><h:outputLabel value="Login "></h:outputLabel></td>
-                <td><h:inputText value="#{controllerBean.login}"></h:inputText></td>
-                <tr></tr>
-                <td><h:outputLabel value="Password "></h:outputLabel></td>
-                <td><h:inputSecret value="#{controllerBean.passWord}"></h:inputSecret></td>
-                <tr></tr>
-                <td></td><td><h:selectBooleanCheckbox value="#{controllerBean.isAdmin}"/>login as admin</td>
-                <tr></tr>
-                <td><td><h:commandButton id="loginButton" action="#{controllerBean.login()}" value="Sign in"/></td></td>
-            </table>
-        </h:form>
-    </h:panelGroup>
-</html>
+    <ui:define name="top">
+        <h:panelGroup>
+            <h2 align="center">Welcome in bank system</h2>
+            <h4 align="center">Please start with login</h4>
+            <h4 align="center"><h:messages  style="list-style-type: none;padding-left: 0px;color: red"/></h4>
+            <h:form>
+
+                <table align="center">
+
+                    <td><h:outputLabel value="Login "></h:outputLabel></td>
+                    <td><h:inputText value="#{controllerBean.login}"></h:inputText></td>
+                    <tr></tr>
+                    <td><h:outputLabel value="Password "></h:outputLabel></td>
+                    <td><h:inputSecret value="#{controllerBean.passWord}"></h:inputSecret></td>
+                    <tr></tr>
+                    <td></td><td><h:selectBooleanCheckbox value="#{controllerBean.isAdmin}"/>login as admin</td>
+                    <tr></tr>
+                    <td><td><h:commandButton id="loginButton" action="#{controllerBean.login()}" value="Sign in"/></td></td>
+
+                </table>
+
+            </h:form>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
 

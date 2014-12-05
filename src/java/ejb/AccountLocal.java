@@ -27,4 +27,6 @@ public interface AccountLocal
 
     public List<Account> selectAll();
 
+    public List<Account> getAccountsFromUser(long id);
+
 }

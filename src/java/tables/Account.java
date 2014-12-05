@@ -4,19 +4,26 @@ import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "AccountTable")
+@NamedQueries(
+        {
+            @NamedQuery(name = "Account.getAccountsFromUser", query = "SELECT a FROM Account a where a.owner.id = :id")
+        })
 
 public class Account implements Serializable
 {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
@@ -70,6 +77,16 @@ public class Account implements Serializable
         return this.accountNumber;
     }
 
+    public void setAccountNumber(Integer accountNumber)
+    {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setStartDate(Date startDate)
+    {
+        this.startDate = startDate;
+    }
+
     public Integer getNormalBalance()
     {
         return this.normalBalance;
@@ -95,27 +112,12 @@ public class Account implements Serializable
         this.dayLimit = aDayLimit;
     }
 
-    public boolean payNow(Integer aMoney, Integer aAcc, String aDesc, String aDescToReceiver)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean payIncaso(Integer aMoney, Integer aAcc, String aInterval, String aDesc)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean payPermanent(Integer aMoney, Integer aAcc, String aInterval, String aDesc, String aDescToReceiver)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public long getId()
+    public Long getId()
     {
         return this.id;
     }
 
-    public void setId(long aId)
+    public void setId(Long aId)
     {
         this.id = aId;
     }

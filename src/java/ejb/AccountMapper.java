@@ -5,9 +5,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import tables.Account;
 
 @Stateless
+
 public class AccountMapper implements AccountLocal
 {
 
@@ -49,6 +51,14 @@ public class AccountMapper implements AccountLocal
     public List<Account> selectAll()
     {
         return em.createQuery("SELECT a FROM Account a", Account.class).getResultList();
+    }
+
+    @Override
+    public List<Account> getAccountsFromUser(long id)
+    {
+        TypedQuery<Account> acc = em.createNamedQuery("Account.getAccountsFromUser", Account.class);
+        acc.setParameter("id", id);
+        return acc.getResultList();
     }
 
 }

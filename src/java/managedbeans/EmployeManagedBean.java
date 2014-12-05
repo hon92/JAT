@@ -5,13 +5,17 @@
  */
 package managedbeans;
 
+import ejb.AccountLocal;
 import ejb.UserLocal;
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.sql.Date;
+import java.time.Instant;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import tables.Account;
 import tables.Employe;
 import tables.User;
 
@@ -21,18 +25,23 @@ import tables.User;
  */
 @ManagedBean
 @SessionScoped
-public class EmployeManagedBean
+public class EmployeManagedBean implements Serializable
 {
 
     @ManagedProperty(value = "#{controlBean}")
-    protected ControllerBean cb;
+    protected ControllerBean controlBean;
     @EJB
     protected UserLocal ul;
+    @EJB
+    protected AccountLocal al;
 
     private List<User> users = null;
+    private List<User> filteredUsers = null;
     private Employe currentEmploye;
     private String search;
     private User editedUser = null;
+    private Account account;
+    private List<Account> selectedAccounts = null;
 
     public UserLocal getUl()
     {
@@ -56,10 +65,15 @@ public class EmployeManagedBean
 
     public List<User> getUsers()
     {
-        if (users == null)
+        if (search != null && search.length() > 0)
+        {
+            users = filteredUsers;
+        }
+        else
         {
             users = ul.selectAll();
         }
+
         return users;
     }
 
@@ -68,14 +82,14 @@ public class EmployeManagedBean
         this.users = users;
     }
 
-    public ControllerBean getCb()
+    public ControllerBean getControlBean()
     {
-        return cb;
+        return controlBean;
     }
 
-    public void setCb(ControllerBean cb)
+    public void setControlBean(ControllerBean controlBean)
     {
-        this.cb = cb;
+        this.controlBean = controlBean;
     }
 
     public String getSearch()
@@ -98,26 +112,29 @@ public class EmployeManagedBean
         this.editedUser = editedUser;
     }
 
+    public Account getAccount()
+    {
+        return account;
+    }
+
+    public void setAccount(Account account)
+    {
+        this.account = account;
+    }
+
+    public List<Account> getSelectedAccounts()
+    {
+        return selectedAccounts;
+    }
+
+    public void setSelectedAccounts(List<Account> selectedAccounts)
+    {
+        this.selectedAccounts = selectedAccounts;
+    }
+
     public void filter()
     {
-
-        if (getUsers() != null)
-        {
-            List<User> toAdd = new ArrayList<>();
-            if (search == null)
-            {
-                search = "";
-            }
-            for (User u : users)
-            {
-                if (u.getName().startsWith(search))
-                {
-                    toAdd.add(u);
-                }
-            }
-            users = toAdd;
-        }
-
+        filteredUsers = ul.selectAllWithName(search);
     }
 
     public String edit(User u)
@@ -136,9 +153,46 @@ public class EmployeManagedBean
         if (editedUser != null)
         {
             ul.update(editedUser);
+            editedUser = null;
+
             return "customers?faces-redirect=true";
         }
         return "";
     }
 
+    public String createUser()
+    {
+        editedUser = new User();
+        return "customerEdit?faces-redirect=true";
+    }
+
+    public String createAccount(User u)
+    {
+        editedUser = u;
+        account = new Account();
+        return "createNewAccount?faces-redirect=true";
+    }
+
+    public String addAccount()
+    {
+        if (account != null)
+        {
+            account.setOwner(editedUser);
+            account.setActualBalance(0);
+            account.setNormalBalance(0);
+            account.setStartDate(new Date(Instant.now().toEpochMilli()));
+            al.insert(account);
+        }
+        return "customers?faces-redirect=true";
+    }
+
+    public String showAccounts(User u)
+    {
+        if (u != null)
+        {
+            selectedAccounts = al.getAccountsFromUser(u.getId());
+            return "accountsInfo?faces-redirect=true";
+        }
+        return "customers?faces-redirect=true";
+    }
 }
