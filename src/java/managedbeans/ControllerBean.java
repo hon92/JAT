@@ -55,7 +55,13 @@ public class ControllerBean implements Serializable
 
     public String login()
     {
-
+        if (el.selectAll().size() == 0)
+        {
+            Employe rootEmploye = new Employe();
+            rootEmploye.setName("root");
+            rootEmploye.setPassWord("root");
+            el.insert(rootEmploye);
+        }
         if (isAdmin)
         {
             Employe e = el.tryLogin(login, passWord);
