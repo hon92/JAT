@@ -14,13 +14,14 @@ public class IncasoTransaction extends SimpleTransaction implements Serializable
     {
     }
 
-    public String getInterval()
+    public String getTimeInterval()
     {
-        return this.timeInterval;
+        return timeInterval;
     }
 
-    public void setInterval(String aInterval)
+    public void setTimeInterval(String timeInterval)
     {
-        this.timeInterval = aInterval;
+        this.timeInterval = timeInterval;
     }
+
 }

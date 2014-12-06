@@ -9,6 +9,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import tables.HistoryTransaction;
 import tables.SimpleTransaction;
 
 /**
@@ -51,6 +53,22 @@ public class SimpleTransactionMapper implements SimpleTransactionLocal
     public SimpleTransaction findById(long id)
     {
         return em.find(SimpleTransaction.class, id);
+    }
+
+    @Override
+    public List<SimpleTransaction> selectAllOutGoingTransaction(HistoryTransaction historyTransaction)
+    {
+        TypedQuery<SimpleTransaction> query = em.createNamedQuery("SimpleTransaction.getOutGoing", SimpleTransaction.class);
+        query.setParameter("ht", historyTransaction);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<SimpleTransaction> selectAllIncomingTransaction(int accNumber)
+    {
+        TypedQuery<SimpleTransaction> query = em.createNamedQuery("SimpleTransaction.getIncoming", SimpleTransaction.class);
+        query.setParameter("acc", accNumber);
+        return query.getResultList();
     }
 
 }

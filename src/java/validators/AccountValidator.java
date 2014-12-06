@@ -34,6 +34,11 @@ public class AccountValidator implements Validator
                 Long val = (Long) value;
                 Account ac = umb.getActiveAccount();
 
+                if (ac == null)
+                {
+                    throw new ValidatorException(new FacesMessage("No active account"));
+                }
+
                 if (val.toString().length() != 10)
                 {
                     throw new ValidatorException(new FacesMessage("Account lenght is not 10"));

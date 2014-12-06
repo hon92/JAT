@@ -33,6 +33,12 @@ public class MoneyValidator implements Validator
             {
                 Long val = (Long) value;
                 Account ac = umb.getActiveAccount();
+
+                if (ac == null)
+                {
+                    throw new ValidatorException(new FacesMessage("No active account"));
+                }
+
                 Integer balance = ac.getActualBalance();
 
                 if (val > balance)

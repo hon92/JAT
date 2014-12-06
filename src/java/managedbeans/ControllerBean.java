@@ -90,6 +90,7 @@ public class ControllerBean implements Serializable
     public String logout()
     {
         isLogged = false;
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index.xhtml?faces-redirect=true";
     }
 

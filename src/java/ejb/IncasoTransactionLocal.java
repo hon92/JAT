@@ -5,7 +5,9 @@
  */
 package ejb;
 
+import java.util.List;
 import javax.ejb.Local;
+import tables.IncasoTransaction;
 
 /**
  *
@@ -15,4 +17,13 @@ import javax.ejb.Local;
 public interface IncasoTransactionLocal
 {
 
+    public void insert(IncasoTransaction it);
+
+    public void update(IncasoTransaction it);
+
+    public void delete(IncasoTransaction it);
+
+    public List<IncasoTransaction> selectAll();
+
+    public IncasoTransaction findById(long id);
 }

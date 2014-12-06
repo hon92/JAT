@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/contentTemplate.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="content">
+
+        <h:outputLabel value="Transaction detail"/><br/><br/>
+
+        <table>
+            <td></td>
+            <tr><td><h:outputLabel value="Creation date"/></td><td><h:outputLabel value="#{userManagedBean.selectedTransaction.creationDate}"/></td></tr>
+            <tr><td><h:outputLabel value="Money"/></td><td><h:outputLabel value="#{userManagedBean.selectedTransaction.money}"/></td></tr>
+            <tr><td><h:outputLabel value="To account"/></td><td><h:outputLabel value="#{userManagedBean.selectedTransaction.to}"/></td></tr>
+            <c:if test="#{userManagedBean.trafficType == 1}">
+                <tr><td><h:outputLabel value="Description"/></td><td><h:outputLabel value="#{userManagedBean.selectedTransaction.description}"/></td></tr>
+            </c:if>
+            <c:if test="#{userManagedBean.trafficType == 2}">
+                <tr><td><h:outputLabel value="Description for receiver"/></td><td><h:outputLabel value="#{userManagedBean.selectedTransaction.descriptionForReceiver}"/></td></tr>
+            </c:if>
+        </table>
+
+        <h:form>
+            <h:commandButton value="Back" action="transactions.xhtml?faces-redirect=true"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

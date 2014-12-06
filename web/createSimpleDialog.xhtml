@@ -28,7 +28,7 @@
                 <tr><td><h:outputLabel value="Description"/></td><td><h:inputTextarea value="#{userManagedBean.newSimpleTransaction.description}"/></td></tr>
                 <tr><td><h:outputText value="Description for receiver"/></td><td><h:inputTextarea value="#{userManagedBean.newSimpleTransaction.descriptionForReceiver}"/></td></tr>
 
-                <tr><td><h:commandButton value="Confirm" action="#{userManagedBean.createSimpleTransaction()}"/></td>
+                <tr><td><h:commandButton value="Confirm" action="#{userManagedBean.createTransaction()}"/></td>
                     <td><h:commandButton value="Storno" action="accountInfo.xhtml?faces-redirect=true" immediate="true"/> </td>
                 </tr>
             </table>

@@ -30,8 +30,8 @@ import tables.User;
 public class EmployeManagedBean implements Serializable
 {
 
-    @ManagedProperty(value = "#{controlBean}")
-    protected ControllerBean controlBean;
+    @ManagedProperty(value = "#{controllerBean}")
+    protected ControllerBean controllerBean;
     @EJB
     protected UserLocal ul;
     @EJB
@@ -46,6 +46,10 @@ public class EmployeManagedBean implements Serializable
     private User editedUser = null;
     private Account account;
     private List<Account> selectedAccounts = null;
+
+    public EmployeManagedBean()
+    {
+    }
 
     public UserLocal getUl()
     {
@@ -86,14 +90,18 @@ public class EmployeManagedBean implements Serializable
         this.users = users;
     }
 
-    public ControllerBean getControlBean()
+    public ControllerBean getControllerBean()
     {
-        return controlBean;
+        return controllerBean;
     }
 
-    public void setControlBean(ControllerBean controlBean)
+    public void setControllerBean(ControllerBean controllerBean)
     {
-        this.controlBean = controlBean;
+        this.controllerBean = controllerBean;
+        if (controllerBean != null)
+        {
+            currentEmploye = controllerBean.getLoggedEmploye();
+        }
     }
 
     public String getSearch()
@@ -156,6 +164,7 @@ public class EmployeManagedBean implements Serializable
     {
         if (editedUser != null)
         {
+            editedUser.setProvider(currentEmploye);
             ul.update(editedUser);
             editedUser = null;
 
@@ -189,6 +198,7 @@ public class EmployeManagedBean implements Serializable
             ht.setNumberOfResults(100);
             hl.insert(ht);
             account.setHistoryTransaction(ht);
+
             al.insert(account);
         }
         return "customers?faces-redirect=true";

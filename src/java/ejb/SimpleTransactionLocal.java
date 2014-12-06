@@ -7,6 +7,7 @@ package ejb;
 
 import java.util.List;
 import javax.ejb.Local;
+import tables.HistoryTransaction;
 import tables.SimpleTransaction;
 
 /**
@@ -26,4 +27,8 @@ public interface SimpleTransactionLocal
     public List<SimpleTransaction> selectAll();
 
     public SimpleTransaction findById(long id);
+
+    public List<SimpleTransaction> selectAllOutGoingTransaction(HistoryTransaction historyTransaction);
+
+    public List<SimpleTransaction> selectAllIncomingTransaction(int accNumber);
 }

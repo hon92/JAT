@@ -3,9 +3,41 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 template="/templates/contentTemplate.xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="content">
-        <h:outputLabel value="incaso new"/>
+        #{userManagedBean.initIT()}
+        <h:outputLabel value="Creating new incaso transaction"/><br/><br/>
+
+        <h:form>
+
+            <table>
+                <tr><td><h:outputLabel value="Account number "/></td><td><h:inputText required="true" requiredMessage="Account number is empty" converterMessage="Account number has to be number" value="#{userManagedBean.newSimpleTransaction.to}">
+                            <f:convertNumber integerOnly="true" type="number"/>
+                            <f:validator validatorId="accountValidator"/>
+                            <f:attribute name= "userBean" value="#{userManagedBean}"/>
+                        </h:inputText>
+                    </td></tr>
+                <tr><td><h:outputLabel value="Money "/></td><td><h:inputText required="true" requiredMessage="Money field is empty" converterMessage="Money has to be number" value="#{userManagedBean.newSimpleTransaction.money}">
+                            <f:convertNumber integerOnly="true" type="number"/>
+                            <f:validator validatorId="moneyValidator"/>
+                            <f:attribute name="userBean" value="#{userManagedBean}"/>
+                        </h:inputText></td></tr>
+
+                <tr><td><h:outputLabel value="Description"/></td><td><h:inputTextarea value="#{userManagedBean.newSimpleTransaction.description}"/></td></tr>
+                <tr><td><h:outputText value="Description for receiver"/></td><td><h:inputTextarea value="#{userManagedBean.newSimpleTransaction.descriptionForReceiver}"/></td></tr>
+                <tr><td><h:outputText value="Time interval"/></td><td>
+                        <h:selectOneMenu value="#{userManagedBean.newSimpleTransaction.timeInterval}">
+                            <f:selectItem itemLabel="Per day" itemValue="day"/>
+                            <f:selectItem itemLabel="Per week" itemValue="week"/>
+                            <f:selectItem itemLabel="Per month" itemValue="month"/>
+                        </h:selectOneMenu></td></tr>
+
+                <tr><td><h:commandButton value="Confirm" action="#{userManagedBean.createTransaction()}"/></td>
+                    <td><h:commandButton value="Storno" action="accountInfo.xhtml?faces-redirect=true" immediate="true"/> </td>
+                </tr>
+            </table>
+        </h:form>
 
     </ui:define>
 </ui:composition>

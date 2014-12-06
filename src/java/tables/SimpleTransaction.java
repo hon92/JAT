@@ -9,10 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-
+@NamedQueries(
+        {
+            @NamedQuery(name = "SimpleTransaction.getOutGoing", query = "SELECT st FROM SimpleTransaction st where st.historyTransaction = :ht"),
+            @NamedQuery(name = "SimpleTransaction.getIncoming", query = "SELECT st FROM SimpleTransaction st where st.receiver = :acc")
+        })
 public class SimpleTransaction implements Serializable
 {
 

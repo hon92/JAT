@@ -16,23 +16,24 @@ public class PermanentTransaction extends SimpleTransaction implements Serializa
     {
     }
 
-    public String getInterval()
+    public String getTimeInterval()
     {
-        return this.timeInterval;
+        return timeInterval;
     }
 
-    public void setInterval(String aInterval)
+    public void setTimeInterval(String timeInterval)
     {
-        this.timeInterval = aInterval;
+        this.timeInterval = timeInterval;
     }
 
     public Date getEndDate()
     {
-        return this.endDate;
+        return endDate;
     }
 
-    public void setEndDate(Date aEndDate)
+    public void setEndDate(Date endDate)
     {
-        this.endDate = aEndDate;
+        this.endDate = endDate;
     }
+
 }

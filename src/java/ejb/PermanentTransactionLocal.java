@@ -5,7 +5,9 @@
  */
 package ejb;
 
+import java.util.List;
 import javax.ejb.Local;
+import tables.PermanentTransaction;
 
 /**
  *
@@ -15,4 +17,13 @@ import javax.ejb.Local;
 public interface PermanentTransactionLocal
 {
 
+    public void insert(PermanentTransaction pt);
+
+    public void update(PermanentTransaction pt);
+
+    public void delete(PermanentTransaction pt);
+
+    public List<PermanentTransaction> selectAll();
+
+    public PermanentTransaction findById(long id);
 }

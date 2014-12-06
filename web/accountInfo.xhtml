@@ -7,15 +7,16 @@
                 template="/templates/contentTemplate.xhtml">
 
     <ui:define name="content">
+
         <h:form>
             <h:outputLabel value="Change active layout "/>
-
             <h:selectOneMenu value="#{userManagedBean.activeAccount}">
                 <f:selectItems value="#{userManagedBean.accounts}" var="acc" itemLabel="#{acc.accountNumber}"/>
                 <f:converter converterId="accountConverter"/>
             </h:selectOneMenu>
-            <h:commandButton value="Change account"/>
+            <h:commandButton value="Change active account"/>
         </h:form>
+
         <br/>
         <h:panelGroup id="accInfoGroup">
 

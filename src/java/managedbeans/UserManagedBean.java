@@ -6,10 +6,14 @@
 package managedbeans;
 
 import ejb.AccountLocal;
+import ejb.IncasoTransactionLocal;
+import ejb.PermanentTransactionLocal;
 import ejb.SimpleTransactionLocal;
 import ejb.UserLocal;
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -18,6 +22,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import tables.Account;
+import tables.IncasoTransaction;
+import tables.PermanentTransaction;
 import tables.SimpleTransaction;
 
 /**
@@ -26,7 +32,7 @@ import tables.SimpleTransaction;
  */
 @ManagedBean
 @SessionScoped
-public class UserManagedBean
+public class UserManagedBean implements Serializable
 {
 
     @ManagedProperty(value = "#{controllerBean}")
@@ -41,11 +47,20 @@ public class UserManagedBean
     @EJB
     protected SimpleTransactionLocal stl;
 
+    @EJB
+    protected PermanentTransactionLocal ptl;
+
+    @EJB
+    protected IncasoTransactionLocal itl;
+
     private List<Account> accounts = null;
     private Account activeAccount = null;
-    private int filterType;
+    private int filterType = 1;
     private List<SimpleTransaction> transactions = null;
     private SimpleTransaction newSimpleTransaction = null;
+    private java.util.Date date;
+    private SimpleTransaction selectedTransaction = null;
+    private int trafficType = 1;
 
     public UserManagedBean()
     {
@@ -59,12 +74,6 @@ public class UserManagedBean
     public List<Account> getAccounts()
     {
         List<Account> acc = al.getAccountsFromUser(controllerBean.getLoggedUser().getId());
-
-        if (activeAccount == null && !acc.isEmpty())
-        {
-            activeAccount = acc.get(0);
-        }
-
         return acc;
     }
 
@@ -123,9 +132,80 @@ public class UserManagedBean
         this.newSimpleTransaction = newSimpleTransaction;
     }
 
+    public java.util.Date getDate()
+    {
+        return date;
+    }
+
+    public void setDate(java.util.Date date)
+    {
+        this.date = date;
+        if (newSimpleTransaction instanceof PermanentTransaction)
+        {
+            ((PermanentTransaction) newSimpleTransaction).setEndDate(new Date(date.toInstant().toEpochMilli()));
+        }
+
+        this.date = null;
+    }
+
+    public SimpleTransaction getSelectedTransaction()
+    {
+        return selectedTransaction;
+    }
+
+    public void setSelectedTransaction(SimpleTransaction selectedTransaction)
+    {
+        this.selectedTransaction = selectedTransaction;
+    }
+
+    public int getTrafficType()
+    {
+        return trafficType;
+    }
+
+    public void setTrafficType(int trafficType)
+    {
+        this.trafficType = trafficType;
+    }
+
     public void filterTransactions()
     {
-        //System.out.println("dadassssssssssssssssssss" + filterType);
+        if (transactions != null)
+        {
+            transactions.clear();
+        }
+        else
+        {
+            transactions = new ArrayList<>();
+        }
+
+        if (getActiveAccount() == null)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("No active account"));
+            return;
+        }
+
+        switch (filterType)
+        {
+            case 1:
+                if (trafficType == 1)//odchozi
+                {
+                    transactions = stl.selectAllOutGoingTransaction(getActiveAccount().getHistoryTransaction());
+                }
+                else
+                {
+                    transactions = stl.selectAllIncomingTransaction(getActiveAccount().getAccountNumber());
+                }
+                break;
+            case 2:
+                transactions = new ArrayList<>(ptl.selectAll());
+                break;
+            case 3:
+                transactions = new ArrayList<>(itl.selectAll());
+                break;
+
+        }
+
     }
 
     public AccountLocal getAl()
@@ -133,12 +213,12 @@ public class UserManagedBean
         return al;
     }
 
-    public String createSimpleTransaction()
+    public String createTransaction()
     {
 
         if (activeAccount != null)
         {
-            newSimpleTransaction.setCreationDate(new Date(Instant.now().getEpochSecond()));
+            newSimpleTransaction.setCreationDate(new Date(Instant.now().toEpochMilli()));
             newSimpleTransaction.setHistoryTransaction(activeAccount.getHistoryTransaction());
 
             stl.insert(newSimpleTransaction);
@@ -162,7 +242,22 @@ public class UserManagedBean
     public void initST()
     {
         this.newSimpleTransaction = new SimpleTransaction();
-        getAccounts();
+    }
+
+    public void initPT()
+    {
+        this.newSimpleTransaction = new PermanentTransaction();
+    }
+
+    public void initIT()
+    {
+        this.newSimpleTransaction = new IncasoTransaction();
+    }
+
+    public String showTransactionDetail(SimpleTransaction st)
+    {
+        selectedTransaction = st;
+        return "transactionDetail.xhtml?faces-redirect=true";
     }
 
 }
