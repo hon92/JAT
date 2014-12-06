@@ -7,13 +7,24 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        <h:dataTable value="#{userManagedBean.activeAccount.historyTransaction.transactions}" var="tran">
+        <h:form>
+            <h:outputLabel value="Choose type "/>
+            <h:selectOneMenu value="#{userManagedBean.filterType}">
+                <f:selectItem itemLabel="Simple transactions" itemValue="1"/>
+                <f:selectItem itemLabel="Permanent transactions" itemValue="2"/>
+                <f:selectItem itemLabel="Incaso transactions" itemValue="3"/>
+                <f:ajax event="change" render="transactionTable" listener="#{userManagedBean.filterTransactions()}"/>
+            </h:selectOneMenu>
+        </h:form>
+
+        <h:dataTable id="transactionTable" value="#{userManagedBean.transactions}" var="tran">
             <h:column>
                 <f:facet name="header">Type</f:facet>
-                <h:outputLabel value="tran.money"/>
+                <h:outputLabel value="tran"/>
             </h:column>
 
         </h:dataTable>
+
 
         <h:outputLabel value="transaction: #{userManagedBean.activeAccount.historyTransaction}"/>
     </ui:define>

@@ -29,4 +29,6 @@ public interface AccountLocal
 
     public List<Account> getAccountsFromUser(long id);
 
+    public Account findByAccountName(Integer val);
+
 }

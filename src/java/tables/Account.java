@@ -16,7 +16,9 @@ import javax.persistence.Table;
 @Table(name = "AccountTable")
 @NamedQueries(
         {
-            @NamedQuery(name = "Account.getAccountsFromUser", query = "SELECT a FROM Account a where a.owner.id = :id")
+            @NamedQuery(name = "Account.getAccountsFromUser", query = "SELECT a FROM Account a where a.owner.id = :id"),
+            @NamedQuery(name = "Account.getAccountByAccountNumber", query = "SELECT a FROM Account a WHERE a.accountNumber= :accountNumber")
+
         })
 
 public class Account implements Serializable

@@ -5,7 +5,9 @@
  */
 package ejb;
 
+import java.util.List;
 import javax.ejb.Local;
+import tables.SimpleTransaction;
 
 /**
  *
@@ -15,4 +17,13 @@ import javax.ejb.Local;
 public interface SimpleTransactionLocal
 {
 
+    public void insert(SimpleTransaction st);
+
+    public void update(SimpleTransaction st);
+
+    public void delete(SimpleTransaction st);
+
+    public List<SimpleTransaction> selectAll();
+
+    public SimpleTransaction findById(long id);
 }

@@ -61,4 +61,14 @@ public class AccountMapper implements AccountLocal
         return acc.getResultList();
     }
 
+    @Override
+    public Account findByAccountName(Integer val)
+    {
+        TypedQuery<Account> q = em.createNamedQuery("Account.getAccountByAccountNumber", Account.class);
+        q.setParameter("accountNumber", val);
+        List<Account> accs = q.getResultList();
+
+        return accs.size() == 0 ? null : accs.get(0);
+    }
+
 }
