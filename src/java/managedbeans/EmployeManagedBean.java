@@ -6,6 +6,7 @@
 package managedbeans;
 
 import ejb.AccountLocal;
+import ejb.HistoryLocal;
 import ejb.UserLocal;
 import java.io.Serializable;
 import java.sql.Date;
@@ -17,6 +18,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import tables.Account;
 import tables.Employe;
+import tables.HistoryTransaction;
 import tables.User;
 
 /**
@@ -34,6 +36,8 @@ public class EmployeManagedBean implements Serializable
     protected UserLocal ul;
     @EJB
     protected AccountLocal al;
+    @EJB
+    protected HistoryLocal hl;
 
     private List<User> users = null;
     private List<User> filteredUsers = null;
@@ -181,6 +185,10 @@ public class EmployeManagedBean implements Serializable
             account.setActualBalance(0);
             account.setNormalBalance(0);
             account.setStartDate(new Date(Instant.now().toEpochMilli()));
+            HistoryTransaction ht = new HistoryTransaction();
+            ht.setNumberOfResults(100);
+            hl.insert(ht);
+            account.setHistoryTransaction(ht);
             al.insert(account);
         }
         return "customers?faces-redirect=true";

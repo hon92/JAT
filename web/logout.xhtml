@@ -14,6 +14,11 @@
             </h:form>
 
         </h:panelGroup>
+        <h:panelGroup rendered="#{userManagedBean.activeAccount != null}">
+            <h:outputLabel value="Active account #{userManagedBean.activeAccount.accountNumber}"/><br/>
+            <h:outputLabel value="Money on account: #{userManagedBean.activeAccount.actualBalance}"/>
+        </h:panelGroup>
+
     </ui:define>
 </ui:composition>
 

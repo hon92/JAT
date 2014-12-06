@@ -33,15 +33,16 @@ public class SimpleTransaction implements Serializable
     {
     }
 
-//    public HistoryTransaction getHistoryTransaction()
-//    {
-//        return historyTransaction;
-//    }
-//
-//    public void setHistoryTransaction(HistoryTransaction historyTransaction)
-//    {
-//        this.historyTransaction = historyTransaction;
-//    }
+    public HistoryTransaction getHistoryTransaction()
+    {
+        return historyTransaction;
+    }
+
+    public void setHistoryTransaction(HistoryTransaction historyTransaction)
+    {
+        this.historyTransaction = historyTransaction;
+    }
+
     public Long getId()
     {
         return id;

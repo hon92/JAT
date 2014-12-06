@@ -76,19 +76,4 @@ public class HistoryTransaction implements Serializable
     {
         this.numberOfResults = aNumberOfResults;
     }
-
-    public void addCommand(SimpleTransaction aNewCommand)
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public void clearHistory()
-    {
-        throw new UnsupportedOperationException();
-    }
-
-    public void removeCommand(SimpleTransaction aCommandToRemove)
-    {
-        throw new UnsupportedOperationException();
-    }
 }
